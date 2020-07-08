@@ -31,12 +31,16 @@ public class StepDef {
 		Assert.assertEquals("Wrong page!!!", "Login - iBilling", loginPageTitle);
 
 	}
-
 	
-	@Then("^User enters UserName  and Password$")
-	public void user_enters_UserName_and_Password() throws Throwable {
-		driver.findElement(By.id("username")).sendKeys("demo@techfios.com");
-	    driver.findElement(By.id("password")).sendKeys("abc123");
+	//Regular Expression:
+	//1. \"([^\"]*)\"
+	//2. \"(.*)\"
+	
+	
+	@Then("^User enters \"(.*)\"  and \"(.*)\"$")
+	public void user_enters_UserName_and_Password(String login, String password) throws Throwable {
+		driver.findElement(By.id("username")).sendKeys(login);
+	    driver.findElement(By.id("password")).sendKeys(password);
 	}
 
 	@Then("^User clicks on the SignIn Button$")
@@ -48,5 +52,11 @@ public class StepDef {
 	public void user_is_on_Home_Page() throws Throwable {
 		String dashboardPageTitle = driver.getTitle();
 		Assert.assertEquals("Dashboard- iBilling", dashboardPageTitle);
+	}
+	
+	@Then("^Close Browser$")
+	public void close_Browser() throws Throwable {
+	    driver.close();
+	    driver.quit();
 	}
 }
